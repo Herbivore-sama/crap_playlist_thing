@@ -10,17 +10,13 @@ def chooseFile():
         readout.configure(state="normal")
         readout.insert("1.0", "Playlist file set to " + filename + "\n")
         readout.configure(state="disabled")
-        # chosenFile.configure(state="normal")
         chosenFileText.set(filename)
-        # chosenFile.configure(state="disabled")
     elif fileInfo.getplaylistPath != "":
         pass
     else:
         readout.configure(state="normal")
         readout.insert("1.0", "No file chosen\n")
         readout.configure(state="disabled")
-    # convert.convert("C:\\Music", "/music", filename, "C:\\Users\\Krauser\\Documents\\test\\playlist-sync\\test")
-    # convert.copy(filename, "C:\\Users\\Krauser\\Documents\\test\\playlist-sync\\test")
 
 def convertAndCopy():
     oldpath = oldpathInput.get().strip()
