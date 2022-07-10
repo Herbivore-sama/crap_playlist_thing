@@ -2,7 +2,7 @@
 
 I got sick of how awful most Android music apps are at sorting files, so I started using Syncthing and building the .m3u via Foobar2000. This is going to be just a simple Python script to automatically copy files to your chosen sync folder, convert the given playlist to the appropriate Android directory format, and then copy that as well. Who knows if I'll ever bother to actually complete it or push it up, I'm only using this account because I'm too embarrassed to put this anywhere where people who know me might recognize it as mine.
 
-In its final state, it should have a GUI that just asks the user for five inputs:
+Run gui.py with convert.py in the same folder, you'll be asked for five inputs:
 
 1. Source .m3u
 2. Path to trim from the source
