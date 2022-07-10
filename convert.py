@@ -14,7 +14,7 @@ def copy(file, destDirectory):
         musicfiles = [i for i in plfile if i != "#EXTM3U\n"]
         for i in musicfiles:
             try:
-                shutil.copyfile(i.rstrip(), os.path.join(destDirectory, os.path.basename(i)).rstrip())
+                shutil.copyfile(i.rstrip(), os.path.join(destDirectory, os.path.basename(i)))
             except:
                 print("Playlist file contains invalid path, and/or destination is invalid")
 
