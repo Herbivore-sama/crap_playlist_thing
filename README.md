@@ -15,6 +15,7 @@ Features I want to implement next:
 4. Select and process multiple playlists in one run  
 5. Store options in a file to make it quicker to launch and use without having to set it up again every time  
 6. Add CLI options to make it easier to reference in a different script without having to use my terrible GUI  
+7. Make the GUI not horrible  
 
 Further down the road, I might add basic playlist editing features as well if I can be bothered (stuff like album shuffle would be nice).
 
