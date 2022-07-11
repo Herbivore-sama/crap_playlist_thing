@@ -19,6 +19,8 @@ Features I want to implement next:
 
 Further down the road, I might add basic playlist editing features as well if I can be bothered (stuff like album shuffle would be nice).
 
+Turns out that Foobar2000 doesn't insert accented characters into .m3u files. Additionally, if you insert them manually, Python doesn't like it. This one sounds like a headache.
+
 ---
 
 ## Instructions
