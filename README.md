@@ -9,11 +9,11 @@ I got sick of how awful most Android music apps are at sorting files, so I start
 Script is now functional as described below. Place gui.py and convert.py in same folder, and run gui.py.
 
 Features I want to implement next:
-1. Replace "Convert and Copy" with two tickboxes, one for convert, one for copy (I doubt this will be at all difficult once I find the time to actually do it)  
+1. Replace "Convert and Copy" with two tickboxes, one for convert, one for copy (I doubt this will be at all difficult once I find the time to actually do it)  - done
 2. Improve the file copy method - right now it locks up the whole program until it completes, and always overwrites existing files. I'd like to change it to a delta copy with hash verification, and improve pathing (preserve folders, instead of assuming everything in the playlist is in the same folder and just dumping the files into the destination path like it does now)  
 3. Add a progress bar or some other way to keep track of the file copy  
 4. Select and process multiple playlists in one run  
-5. Store options in a file to make it quicker to launch and use without having to set it up again every time  
+5. Store options in a file to make it quicker to launch and use without having to set it up again every time  - done
 6. Add CLI options to make it easier to reference in a different script without having to use my terrible GUI  
 7. Make the GUI not horrible  
 
