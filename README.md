@@ -21,6 +21,9 @@ Further down the road, I might add basic playlist editing features as well if I 
 
 Turns out that Foobar2000 doesn't insert accented characters into .m3u files. Additionally, if you insert them manually, Python doesn't like it. This one sounds like a headache.
 
+Right, just use .m3u8. Duh.
+Gonna have to rework some stuff.
+
 ---
 
 ## Instructions
