@@ -1,8 +1,29 @@
 # Crap Playlist Thing
 
-I got sick of how awful most Android music apps are at sorting files, so I started using Syncthing and building the .m3u via Foobar2000. This is going to be just a simple Python script to automatically copy files to your chosen sync folder, convert the given playlist to the appropriate Android directory format, and then copy that as well. Who knows if I'll ever bother to actually complete it or push it up, I'm only using this account because I'm too embarrassed to put this anywhere where people who know me might recognize it as mine.
+I got sick of how awful most Android music apps are at sorting files, so I started using Syncthing and building the .m3u via Foobar2000. This is going to be just a simple Python script to automatically copy files to your chosen sync folder, convert the given playlist to the appropriate Android directory format, and then copy that as well. 
 
-Run gui.py with convert.py in the same folder, you'll be asked for five inputs:
+---
+
+## Basic functionality now working
+
+Script is now functional as described below. Place gui.py and convert.py in same folder, and run gui.py.
+
+Features I want to implement next:
+1. Replace "Convert and Copy" with two tickboxes, one for convert, one for copy (I doubt this will be at all difficult once I find the time to actually do it)  
+2. Improve the file copy method - right now it locks up the whole program until it completes, and always overwrites existing files. I'd like to change it to a delta copy with hash verification, and improve pathing (preserve folders, instead of assuming everything in the playlist is in the same folder and just dumping the files into the destination path like it does now)  
+3. Add a progress bar or some other way to keep track of the file copy  
+4. Select and process multiple playlists in one run  
+5. Store options in a file to make it quicker to launch and use without having to set it up again every time  
+6. Add CLI options to make it easier to reference in a different script without having to use my terrible GUI  
+7. Make the GUI not horrible  
+
+Further down the road, I might add basic playlist editing features as well if I can be bothered (stuff like album shuffle would be nice).
+
+---
+
+## Instructions
+
+Run gui.py with convert.py in the same folder and run gui.py, you'll be asked for five inputs:
 
 1. Source .m3u
 2. Path to trim from the source
@@ -31,3 +52,4 @@ And then your Android music folder is located under ../../../sdcard/music - you 
 etc.
 
 Riveting, and extremely useful, I know. Why am I even bothering to type all this out, it's not like anyone other than myself is ever going to read it. 1AM on a Sunday morning is a magical time. 
+
