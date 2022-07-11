@@ -23,10 +23,15 @@ def convertAndCopy(readout, fileInfo, copyFiles, convertPlaylist):
         readout.insert("1.0", "Playlist converted and written to " + fileInfo.playlistPath.get().strip() + " \n")
         readout.configure(state="disabled")
     if copyFiles.get():
-        copy(fileInfo.file.get(), fileInfo.destDirectory.get().strip())
+        # try:
+        copy(fileInfo.file.get(), fileInfo.destDirectory.get().strip(), fileInfo.basePath.get().strip())
         readout.configure(state="normal")
         readout.insert("1.0", "Files copied to " + fileInfo.destDirectory.get().strip() + " \n")
         readout.configure(state="disabled")
+        # except:
+        #     readout.configure(state="normal")
+        #     readout.insert("1.0", "Playlist file contains invalid path, and/or destination is invalid\n")
+        #     readout.configure(state="disabled")
 
 def storeConfig(fileInfo):
     with open(os.path.join(os.getcwd(), "data.json"), "w") as datafile:
@@ -43,7 +48,6 @@ def getConfig():
     try:
         with open(os.path.join(os.getcwd(), "data.json"), "r") as datafile:
             lastdata = json.load(datafile)
-            print(lastdata['basePath'])
             return[lastdata['basePath'], lastdata['newPath'], lastdata['playlistPath'], lastdata['file'], lastdata['destDirectory']]
     except:
         return["","","","",""]
@@ -57,14 +61,17 @@ def convert(basePath, newPath, file, destDirectory):
         plfile.close()
         destfile.close()
 
-def copy(file, destDirectory):
+def copy(file, destDirectory, basePath):
     with open(file, "r") as plfile:
         musicfiles = [i for i in plfile if i != "#EXTM3U\n"]
         for i in musicfiles:
-            try:
-                shutil.copyfile(i.rstrip(), os.path.join(destDirectory, os.path.basename(i)))
-            except:
-                print("Playlist file contains invalid path, and/or destination is invalid")
+            subdir = os.path.relpath(i, basePath)
+            filepath = os.path.join(destDirectory, subdir)
+            dir = os.path.dirname(filepath)
+            print(filepath)
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+            shutil.copyfile(i.rstrip(), filepath.rstrip())
 
 class conversionAndCopyData:
     def __init__(self, config, window):
@@ -78,3 +85,4 @@ class conversionAndCopyData:
         self.file.set(config[3])
         self.destDirectory = tk.StringVar()
         self.destDirectory.set(config[4])
+        
