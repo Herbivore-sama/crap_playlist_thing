@@ -10,8 +10,6 @@ pathmsg2 = tk.Label(text = "Enter new playlist path format")
 pathmsg3 = tk.Label(text = "Enter destination playlist path")
 pathmsg4 = tk.Label(text = "Enter destination music path")
 
-chosenFileText = tk.StringVar()
-
 chosenFile = tk.Entry(
     window,
     width = 100,
