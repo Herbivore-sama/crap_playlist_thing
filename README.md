@@ -8,7 +8,7 @@ See [issues](https://github.com/Herbivore-sama/crap_playlist_thing/issues) for c
 
 ## Instructions
 
-Run gui.py with convert.py in the same folder and run gui.py, you'll be asked for five inputs:
+Run gui.py with convert.py in the same folder, you'll be asked for five inputs:
 
 1. Source .m3u
 2. Path to trim from the source
