@@ -10,7 +10,7 @@ Script is now functional as described below. Place gui.py and convert.py in same
 
 Features I want to implement next:
 1. Replace "Convert and Copy" with two tickboxes, one for convert, one for copy (I doubt this will be at all difficult once I find the time to actually do it)  - done
-2. Improve the file copy method - right now it locks up the whole program until it completes, and always overwrites existing files. I'd like to change it to a delta copy with hash verification, and improve pathing (preserve folders, instead of assuming everything in the playlist is in the same folder and just dumping the files into the destination path like it does now)  
+2. Improve the file copy method - right now it locks up the whole program until it completes, and always overwrites existing files. I'd like to change it to a delta copy with hash verification, and improve pathing (preserve folders, instead of assuming everything in the playlist is in the same folder and just dumping the files into the destination path like it does now)  - preserve folders is done
 3. Add a progress bar or some other way to keep track of the file copy  
 4. Select and process multiple playlists in one run  
 5. Store options in a file to make it quicker to launch and use without having to set it up again every time  - done
@@ -18,6 +18,11 @@ Features I want to implement next:
 7. Make the GUI not horrible  
 
 Further down the road, I might add basic playlist editing features as well if I can be bothered (stuff like album shuffle would be nice).
+
+Turns out that Foobar2000 doesn't insert accented characters into .m3u files. Additionally, if you insert them manually, Python doesn't like it. This one sounds like a headache.
+
+Right, just use .m3u8. Duh.
+Gonna have to rework some stuff.
 
 ---
 
