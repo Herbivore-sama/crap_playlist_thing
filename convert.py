@@ -2,7 +2,7 @@ import os,shutil, json, tkinter as tk
 from tkinter.filedialog import askopenfilename
 
 def chooseFile(readout, fileInfo):
-    filename = askopenfilename(filetype=[("Playlist file", "*.m3u")])
+    filename = askopenfilename(filetype=[("Playlist file", "*.m3u"),("Playlist file", "*.m3u8")])
     if filename != "":
         fileInfo.file.set(filename)
         readout.configure(state="normal")
@@ -23,15 +23,10 @@ def convertAndCopy(readout, fileInfo, copyFiles, convertPlaylist):
         readout.insert("1.0", "Playlist converted and written to " + fileInfo.playlistPath.get().strip() + " \n")
         readout.configure(state="disabled")
     if copyFiles.get():
-        # try:
-        copy(fileInfo.file.get(), fileInfo.destDirectory.get().strip(), fileInfo.basePath.get().strip())
+        copy(fileInfo.file.get(), fileInfo.destDirectory.get().strip(), fileInfo.basePath.get().strip(), readout)
         readout.configure(state="normal")
         readout.insert("1.0", "Files copied to " + fileInfo.destDirectory.get().strip() + " \n")
         readout.configure(state="disabled")
-        # except:
-        #     readout.configure(state="normal")
-        #     readout.insert("1.0", "Playlist file contains invalid path, and/or destination is invalid\n")
-        #     readout.configure(state="disabled")
 
 def storeConfig(fileInfo):
     with open(os.path.join(os.getcwd(), "data.json"), "w") as datafile:
@@ -53,7 +48,7 @@ def getConfig():
         return["","","","",""]
 
 def convert(basePath, newPath, file, destDirectory):
-    with open(file, "r") as plfile, open(os.path.join(destDirectory, os.path.basename(file)), "w") as destfile:
+    with open(file, "r", encoding="utf-8-sig") as plfile, open(os.path.join(destDirectory, os.path.basename(file)), "w", encoding="utf-8-sig") as destfile:
         destfile.write("#EXTM3U\n")
         musicfiles = [i for i in plfile if i != "#EXTM3U\n"]
         for i in musicfiles:
@@ -61,17 +56,19 @@ def convert(basePath, newPath, file, destDirectory):
         plfile.close()
         destfile.close()
 
-def copy(file, destDirectory, basePath):
-    with open(file, "r") as plfile:
+def copy(file, destDirectory, basePath, readout):
+    with open(file, "r", encoding="utf-8-sig") as plfile:
         musicfiles = [i for i in plfile if i != "#EXTM3U\n"]
         for i in musicfiles:
             subdir = os.path.relpath(i, basePath)
             filepath = os.path.join(destDirectory, subdir)
             dir = os.path.dirname(filepath)
-            print(filepath)
             if not os.path.exists(dir):
                 os.makedirs(dir)
-            shutil.copyfile(i.rstrip(), filepath.rstrip())
+            try:
+                shutil.copyfile(i.rstrip(), filepath.rstrip())
+            except Exception as e:
+                print(e)
 
 class conversionAndCopyData:
     def __init__(self, config, window):
