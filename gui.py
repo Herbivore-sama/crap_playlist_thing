@@ -1,4 +1,5 @@
 import tkinter as tk, os, convert
+from turtle import color
 
 window = tk.Tk()
 window.title("Welcome to garbage, enjoy your stay")
@@ -11,11 +12,11 @@ pathmsg2 = tk.Label(text = "Enter new playlist path format", bg="black", fg="whi
 pathmsg3 = tk.Label(text = "Enter destination playlist path", bg="black", fg="white")
 pathmsg4 = tk.Label(text = "Enter destination music path", bg="black", fg="white")
 
-chosenFile = tk.Entry(
+chosenFile = tk.Label(
     window,
-    width = 100,
     textvariable = fileInfo.file,
-    state = "disabled",
+    bg="black", 
+    fg="white"
 )
 
 oldpathInput = tk.Entry(
