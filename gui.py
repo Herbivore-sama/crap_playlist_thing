@@ -1,5 +1,4 @@
 import tkinter as tk, os, convert
-from turtle import color
 
 window = tk.Tk()
 window.title("Welcome to garbage, enjoy your stay")
