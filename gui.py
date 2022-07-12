@@ -2,51 +2,60 @@ import tkinter as tk, os, convert
 
 window = tk.Tk()
 window.title("Welcome to garbage, enjoy your stay")
+window.configure(bg="black")
 
 fileInfo = convert.conversionAndCopyData(convert.getConfig(), window)
 
-pathmsg1 = tk.Label(text = "Enter old playlist path format")
-pathmsg2 = tk.Label(text = "Enter new playlist path format")
-pathmsg3 = tk.Label(text = "Enter destination playlist path")
-pathmsg4 = tk.Label(text = "Enter destination music path")
+pathmsg1 = tk.Label(text = "Enter old playlist path format", bg="black", fg="white")
+pathmsg2 = tk.Label(text = "Enter new playlist path format", bg="black", fg="white")
+pathmsg3 = tk.Label(text = "Enter destination playlist path", bg="black", fg="white")
+pathmsg4 = tk.Label(text = "Enter destination music path", bg="black", fg="white")
 
 chosenFile = tk.Entry(
     window,
     width = 100,
     textvariable = fileInfo.file,
-    state = "disabled"
+    state = "disabled",
 )
 
 oldpathInput = tk.Entry(
     window,
     width = 100,
-    textvariable = fileInfo.basePath
+    textvariable = fileInfo.basePath,
+    bg="black",
+    fg="white"
 )
 
 newpathInput = tk.Entry(
     window,
     width = 100,
-    textvariable = fileInfo.newPath
+    textvariable = fileInfo.newPath,
+    bg="black",
+    fg="white"
 )
 
 playlistDest = tk.Entry(
     window,
     width = 100,
-    textvariable = fileInfo.playlistPath
+    textvariable = fileInfo.playlistPath,
+    bg="black",
+    fg="white"
 )
 
 musicDest = tk.Entry(
     window,
     width = 100,
-    textvariable = fileInfo.destDirectory
+    textvariable = fileInfo.destDirectory,
+    bg="black",
+    fg="white"
 )
 
 readout = tk.Text(
     window,
     height = 10, 
     width = 100,
-    bg = "white",
-    fg = "black",
+    bg = "black",
+    fg = "white",
     state="disabled"
 )
 
@@ -55,8 +64,8 @@ addfile = tk.Button(
     text="Choose .m3u file",
     width=15,
     height=1,
-    bg="white",
-    fg="black",
+    bg="black",
+    fg="white",
     command = lambda: convert.chooseFile(readout, fileInfo)
 )
 
@@ -68,8 +77,8 @@ candc = tk.Button(
     text = "Execute",
     width=15,
     height=1,
-    bg="white",
-    fg="black",
+    bg="black",
+    fg="white",
     command = lambda: convert.convertAndCopy(readout, fileInfo, copyFiles, convertPlaylist)
 )
 
@@ -78,7 +87,9 @@ convertAffirm = tk.Checkbutton(
     text = "Convert playlist",
     variable = convertPlaylist,
     onvalue = True,
-    offvalue = False
+    offvalue = False,
+    bg="black",
+    fg="white"
 )
 
 copyAffirm = tk.Checkbutton(
@@ -86,7 +97,9 @@ copyAffirm = tk.Checkbutton(
     text = "Copy music files",
     variable = copyFiles,
     onvalue = True,
-    offvalue = False
+    offvalue = False,
+    bg="black",
+    fg="white"
 )
 
 addfile.pack()
