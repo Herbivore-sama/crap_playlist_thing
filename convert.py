@@ -1,32 +1,45 @@
-import os,shutil, json, tkinter as tk
+import os,shutil, json, hashlib, tkinter as tk
+import re
 from tkinter.filedialog import askopenfilename
 
+# Produce hex md5 string for given filename; if nothing is found, return empty hash
+def getHash(filename):
+    fhash = hashlib.md5()
+    try:
+        with open(filename,"rb") as mfile:
+            for chunk in iter(lambda: mfile.read(4096), b""):
+                fhash.update(chunk)
+    except:
+        pass
+    return fhash.hexdigest()
+
+# Send line to log box
+# TODO: #5 improve the way this is handled - lines no longer visible should autoprune
+def sendOutput(readout, line):
+    readout.configure(state="normal")
+    readout.insert("1.0", line + " \n")
+    readout.configure(state="disabled")
+
+# Ask user to select playlist file
 def chooseFile(readout, fileInfo):
     filename = askopenfilename(filetype=[("Playlist file", "*.m3u"),("Playlist file", "*.m3u8")])
     if filename != "":
         fileInfo.file.set(filename)
-        readout.configure(state="normal")
-        readout.insert("1.0", "Playlist file set to " + filename + "\n")
-        readout.configure(state="disabled")
+        sendOutput(readout, "Playlist file set to " + filename)
     elif fileInfo.file.get() != "":
         pass
     else:
-        readout.configure(state="normal")
-        readout.insert("1.0", "No file chosen\n")
-        readout.configure(state="disabled")
+        sendOutput(readout, "No file chosen")
 
+# If convert flag is set, convert playlist; if copy flag is set, copy music files
 def convertAndCopy(readout, fileInfo, copyFiles, convertPlaylist):
     storeConfig(fileInfo)
     if convertPlaylist.get():
         convert(fileInfo.basePath.get().strip(), fileInfo.newPath.get().strip(), fileInfo.file.get(), fileInfo.playlistPath.get().strip())
-        readout.configure(state="normal")
-        readout.insert("1.0", "Playlist converted and written to " + fileInfo.playlistPath.get().strip() + " \n")
-        readout.configure(state="disabled")
+        sendOutput(readout, "Playlist converted and written to " + fileInfo.playlistPath.get().strip())
     if copyFiles.get():
         copy(fileInfo.file.get(), fileInfo.destDirectory.get().strip(), fileInfo.basePath.get().strip(), readout)
-        readout.configure(state="normal")
-        readout.insert("1.0", "Files copied to " + fileInfo.destDirectory.get().strip() + " \n")
-        readout.configure(state="disabled")
+        sendOutput(readout, "Files copied to " + fileInfo.destDirectory.get().strip())
 
 def storeConfig(fileInfo):
     with open(os.path.join(os.getcwd(), "data.json"), "w") as datafile:
@@ -39,6 +52,7 @@ def storeConfig(fileInfo):
         }
         json.dump(filedict, datafile)
 
+# Load last saved options from data file
 def getConfig():
     try:
         with open(os.path.join(os.getcwd(), "data.json"), "r") as datafile:
@@ -47,6 +61,7 @@ def getConfig():
     except:
         return["","","","",""]
 
+# Convert playlist to new format
 def convert(basePath, newPath, file, destDirectory):
     with open(file, "r", encoding="utf-8-sig") as plfile, open(os.path.join(destDirectory, os.path.basename(file)), "w", encoding="utf-8-sig") as destfile:
         destfile.write("#EXTM3U\n")
@@ -56,19 +71,44 @@ def convert(basePath, newPath, file, destDirectory):
         plfile.close()
         destfile.close()
 
+# Copy music files to new destination
 def copy(file, destDirectory, basePath, readout):
     with open(file, "r", encoding="utf-8-sig") as plfile:
-        musicfiles = [i for i in plfile if i != "#EXTM3U\n"]
+        musicfiles = [i.rstrip() for i in plfile if i != "#EXTM3U\n"]
+        filecount = 1
         for i in musicfiles:
+            fhash = getHash(i)
             subdir = os.path.relpath(i, basePath)
             filepath = os.path.join(destDirectory, subdir)
             dir = os.path.dirname(filepath)
             if not os.path.exists(dir):
                 os.makedirs(dir)
             try:
-                shutil.copyfile(i.rstrip(), filepath.rstrip())
+                dhash = getHash(filepath)
+                tries = 0
+                if dhash == fhash:
+                    sendOutput(readout, "File " + filepath + " already exists (" + str(filecount) + " of " + str(len(musicfiles)) + ")")
+                while fhash != dhash and tries < 6:
+                    tries += 1
+                    sendOutput(readout, "Copying " + i + " to " + filepath + " (" + str(filecount) + " of " + str(len(musicfiles)) + ")")
+                    shutil.copyfile(i, filepath)
+                    print(i)
+                    print(filepath)
+                    print(fhash)
+                    print(dhash)
+                    dhash = getHash(filepath)
+                    if fhash != dhash:
+                        if os.path.exists(filepath):
+                            os.remove(filepath)
+                        if tries < 6:
+                            sendOutput(readout, "Hash verification failed; recopying")
+                        else:
+                            sendOutput(readout, "File " + i + " failed to verify five times; aborting")
+                    else:
+                        sendOutput(readout, "Hash verify success")
             except Exception as e:
                 print(e)
+            filecount += 1
 
 class conversionAndCopyData:
     def __init__(self, config, window):
