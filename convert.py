@@ -94,10 +94,6 @@ def copy(file, destDirectory, basePath, readout):
                     tries += 1
                     sendOutput(readout, "Copying " + i + " to " + filepath + " (" + str(filecount) + " of " + str(len(musicfiles)) + ")")
                     shutil.copyfile(i, filepath)
-                    print(i)
-                    print(filepath)
-                    print(fhash)
-                    print(dhash)
                     dhash = getHash(filepath)
                     if fhash != dhash:
                         if os.path.exists(filepath):
@@ -111,9 +107,6 @@ def copy(file, destDirectory, basePath, readout):
             except Exception as e:
                 print(e)
             filecount += 1
-
-# def fcopy(origfile, destfile, readout, filenum, fhash):
-    
 
 class conversionAndCopyData:
     def __init__(self, config, window):

@@ -2,6 +2,7 @@ from threading import Thread
 import tkinter as tk, os, convert
 
 window = tk.Tk()
+window.geometry("850x700")
 window.title("Welcome to garbage, enjoy your stay")
 window.configure(bg="black")
 
@@ -53,8 +54,8 @@ musicDest = tk.Entry(
 
 readout = tk.Text(
     window,
-    height = 10, 
-    width = 100,
+    height = 31, 
+    width = 121,
     bg = "black",
     fg = "white",
     state="disabled"
@@ -113,19 +114,25 @@ copyAffirm = tk.Checkbutton(
     selectcolor="black"
 )
 
-addfile.pack()
+addfile.place(x=0, y=0)
 chosenFile.pack(expand=True, fill=tk.X)
-pathmsg1.pack()
+chosenFile.place(x=120, y=0)
+pathmsg1.place(x=0, y=25)
 oldpathInput.pack(expand=True, fill=tk.X)
-pathmsg2.pack()
+oldpathInput.place(x=0, y=50)
+pathmsg2.place(x=0, y=75)
 newpathInput.pack(expand=True, fill=tk.X)
-pathmsg3.pack()
+newpathInput.place(x=0, y=100)
+pathmsg3.place(x=0, y=125)
 playlistDest.pack(expand=True, fill=tk.X)
-pathmsg4.pack()
+playlistDest.place(x=0, y=150)
+pathmsg4.place(x=0, y=175)
 musicDest.pack(expand=True, fill=tk.X)
-convertAffirm.pack()
-copyAffirm.pack()
-candc.pack()
+musicDest.place(x=0, y=200)
+convertAffirm.place(x=0, y=225)
+copyAffirm.place(x=0, y=250)
+candc.place(x=0, y=275)
 readout.pack(expand=True, fill=tk.BOTH)
+readout.place(x=0, y=300)
 
 window.mainloop()
