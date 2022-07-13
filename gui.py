@@ -1,3 +1,4 @@
+from threading import Thread
 import tkinter as tk, os, convert
 
 window = tk.Tk()
@@ -66,6 +67,8 @@ addfile = tk.Button(
     height=1,
     bg="black",
     fg="white",
+    activebackground='black', 
+    activeforeground='white',
     command = lambda: convert.chooseFile(readout, fileInfo)
 )
 
@@ -79,7 +82,9 @@ candc = tk.Button(
     height=1,
     bg="black",
     fg="white",
-    command = lambda: convert.convertAndCopy(readout, fileInfo, copyFiles, convertPlaylist)
+    activebackground='black', 
+    activeforeground='white',
+    command = lambda: Thread(target=lambda: convert.convertAndCopy(readout, fileInfo, copyFiles, convertPlaylist)).start()
 )
 
 convertAffirm = tk.Checkbutton(
@@ -89,7 +94,10 @@ convertAffirm = tk.Checkbutton(
     onvalue = True,
     offvalue = False,
     bg="black",
-    fg="white"
+    fg="white",
+    activebackground='black', 
+    activeforeground='white',
+    selectcolor="black"
 )
 
 copyAffirm = tk.Checkbutton(
@@ -99,7 +107,10 @@ copyAffirm = tk.Checkbutton(
     onvalue = True,
     offvalue = False,
     bg="black",
-    fg="white"
+    fg="white",
+    activebackground='black', 
+    activeforeground='white',
+    selectcolor="black"
 )
 
 addfile.pack()

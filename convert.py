@@ -1,3 +1,4 @@
+from concurrent.futures import ThreadPoolExecutor
 import os,shutil, json, hashlib, tkinter as tk
 import re
 from tkinter.filedialog import askopenfilename
@@ -41,6 +42,7 @@ def convertAndCopy(readout, fileInfo, copyFiles, convertPlaylist):
         copy(fileInfo.file.get(), fileInfo.destDirectory.get().strip(), fileInfo.basePath.get().strip(), readout)
         sendOutput(readout, "Files copied to " + fileInfo.destDirectory.get().strip())
 
+# Save last used options into data file
 def storeConfig(fileInfo):
     with open(os.path.join(os.getcwd(), "data.json"), "w") as datafile:
         filedict = {
@@ -109,6 +111,9 @@ def copy(file, destDirectory, basePath, readout):
             except Exception as e:
                 print(e)
             filecount += 1
+
+# def fcopy(origfile, destfile, readout, filenum, fhash):
+    
 
 class conversionAndCopyData:
     def __init__(self, config, window):
